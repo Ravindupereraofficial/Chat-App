@@ -11,20 +11,6 @@
 
 <body>
     <div> <!--  main-------  -->
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Dropdown button
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#" onclick=sender1()>Sender 1</a></li>
-                <li><a class="dropdown-item" href="#" onclick=sender2()> Sender 2</a></li>
-            </ul>
-        </div>
-        <br>
-
-
-
         <div class="input-group mb-3">
             <button type="button" class="btn btn-outline-secondary">Select Sender</button>
             <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
@@ -34,8 +20,8 @@
             </button>
 
             <ul class="dropdown-menu" id="drop">
-                <li><a class="dropdown-item" href="#" onclick=sender1() id="sender1">Sender 1</a></li>
-                <li><a class="dropdown-item" href="#" onclick=sender2() id="sender2"> Sender 2</a></li>
+                <li><a class="dropdown-item" href="#" onclick="selectsender('sender 1')" id="sender1">Sender 1</a></li>
+                <li><a class="dropdown-item" href="#" onclick="selectsender('sender 2')" id="sender2"> Sender 2</a></li>
             </ul>
             <input type="text" class="form-control" aria-label="Text input with segmented dropdown button" id="gettext">
             <button type="button" class="btn btn-outline-secondary" onclick=sendmessege()>Send</button>
@@ -47,7 +33,7 @@
 
 
 
-        
+
     </div><!-- <div> main-------  -->
 
 

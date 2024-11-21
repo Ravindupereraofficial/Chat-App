@@ -1,19 +1,28 @@
 function sender1(){
-    console.log("al");
+    console.log("sender 1");
 }
 function sender2(){
-    console.log("alu");
+    console.log("sender 2");
 }
+
+
+
+
+
+let selectedsender="";
+function selectsender(sender){
+    selectedsender=sender;
+
+}
+
 
 function sendmessege(){
 
-    let sender11;
-    let sender22;
+    if(selectedsender==""){
+        alert("please select Sender First");
+        return;
+    }
 
-    let dropdwn1=document.getElementById("sender1").value;
-    let dropdwn2=document.getElementById("sender2").value;
-    console.log(dropdwn1);
-    
-    let usermg=document.getElementById("gettext").value="";
-    console.log(usermg);
+    let usermsg=document.getElementById
+
 }
