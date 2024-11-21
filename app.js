@@ -1,18 +1,13 @@
-let findsender="";
-const massegemainarray=[];
+let findsender = "";
+const massegemainarray = [];
 
-
-function selectsender(sender){
-    findsender=sender;
-    
-
+function selectsender(sender) {
+    findsender = sender;
 }
 
-
-function sendmessege(){
-
-    if(findsender==""){
-        alert("please select Sender First");
+function sendmessege() {
+    if (findsender === "") {
+        alert("Please select Sender First");
         return;
     }
 
@@ -22,68 +17,95 @@ function sendmessege(){
         return;
     }
 
-    document.getElementById("gettext").value = "";
-
-    if(findsender=="sender 1"){
-        console.log("ala");
-        
-        let sender1massege={
-            sender : "sender1",
-            message:usermsg
-        }
+    if (findsender === "sender 1") {
+        let sender1massege = {
+            sender: "sender1",
+            message: usermsg
+        };
 
         massegemainarray.push(sender1massege);
-        console.log(massegemainarray);
-      
+    } else {
+        let sender2massege = {
+            sender: "sender2",
+            message: usermsg
+        };
 
-
-   
-    }else{
-        console.log("perera");
-
-        sender1massege={
-            sender : "sender2",
-            message:usermsg
-        }
-
-        massegemainarray.push(sender1massege);
-        console.log(massegemainarray);
-       
-        
+        massegemainarray.push(sender2massege);
     }
+
     loadchatbox();
+    aigetrespond();
+    document.getElementById("gettext").value = "";
 }
 
-function loadchatbox(){
-    const text=document.getElementById("senders");
-    let body="";
+function loadchatbox() {
+    const text = document.getElementById("senders");
+    let body = "";
     massegemainarray.forEach(smassege => {
-        if(smassege.sender === "sender1"){
-            body+= `
-
+        if (smassege.sender === "sender1") {
+            body += `
             <div class="d-flex flex-row justify-content-start mb-4">
-                        <img src="img/free-chat-support-icon-1708-thumb.png"
-                          alt="avatar 1" style="width: 45px; height: 100%;">
-                        <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                          <p class="small mb-0">${smassege.message}</p>
-                        </div>
-                      </div>
-            `
-            
-        }else if (smassege.sender === "sender2"){
-            body+= `
-             <div class="d-flex flex-row justify-content-end mb-4">
-                        <div class="p-3 me-3 border bg-body-tertiary" style="border-radius: 15px;">
-                          <p class="small mb-0">${smassege.message}</p>
-                        </div>
-                        <img src="img/free-chat-support-icon-1708-thumb.png"
-                          alt="avatar 1" style="width: 45px; height: 100%;">
-                      </div>
-            `
+                <img src="img/free-chat-support-icon-1708-thumb.png"
+                    alt="avatar 1" style="width: 45px; height: 100%;">
+                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                    <p class="small mb-0">${smassege.message}</p>
+                </div>
+            </div>
+            `;
+        } else if (smassege.sender === "sender2") {
+            body += `
+            <div class="d-flex flex-row justify-content-end mb-4">
+                <div class="p-3 me-3 border bg-body-tertiary" style="border-radius: 15px;">
+                    <p class="small mb-0">${smassege.message}</p>
+                </div>
+                <img src="img/free-chat-support-icon-1708-thumb.png"
+                    alt="avatar 2" style="width: 45px; height: 100%;">
+            </div>
+            `;
         }
-    })
+    });
 
-    text.innerHTML=body;
+    text.innerHTML = body;
+}
 
+function aigetrespond() {
+    let usermsg = document.getElementById("gettext").value;
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
+    const raw = JSON.stringify({
+        "contents": [
+            {
+                "parts": [
+                    {
+                        "text": usermsg
+                    }
+                ]
+            }
+        ]
+    });
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+    };
+
+    fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBW4kugSJcx9NtESo6nUKyDF1NWjk8kAy0", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+            const aiResponse = result.candidates[0].content.parts[0].text;
+
+           
+            const sender2massege = {
+                sender: "sender2",
+                message: aiResponse
+            };
+
+            massegemainarray.push(sender2massege);
+
+            
+            loadchatbox();
+        })
+        .catch((error) => console.error("Error:", error));
 }
