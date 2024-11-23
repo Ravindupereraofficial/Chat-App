@@ -6,101 +6,174 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatBox Ai</title>
+    <title>ChatBox AI</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #4A90E2, #D1E9FF);
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            padding-bottom: 20px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: #ffffffaa;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4A90E2;
+        }
+
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-header {
+            background-color: #4A90E2;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px 20px 0 0;
+            padding: 15px;
+        }
+
+        .card-body {
+            height: 400px;
+            overflow-y: auto;
+            background-color: #F0F8FF;
+            padding: 20px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .card-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .card-body::-webkit-scrollbar-thumb {
+            background-color: #4A90E2;
+            border-radius: 10px;
+        }
+
+        .chat-bubble {
+            border-radius: 20px;
+            padding: 10px 15px;
+            max-width: 75%;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sender1 {
+            background: linear-gradient(135deg, #D1E9FF, #AFCDFD);
+            color: #333;
+        }
+
+        .sender2 {
+            background: linear-gradient(135deg, #F0F4F8, #D9E4EA);
+            color: #333;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .textfield {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .textfield input {
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            padding: 10px 15px;
+        }
+
+        .textfield button {
+            border-radius: 30px;
+            background-color: #4A90E2;
+            color: white;
+            padding: 8px 20px;
+        }
+
+        .textfield button:hover {
+            background-color: #357ABD;
+        }
+
+        .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 
-<body style="background-color: #d8e7f6;">
-    <div class="btn-outline-secondary"> <!--  main-------  -->
+<body>
 
-        <nav class="navbar navbar-expand-lg" style="background-color: #449df7;">
-            <div class="container-md">
-              <a class="navbar-brand" href="#"><i class="bi bi-person-badge"></i>ChatBox Ai</a>
-            </div>
-          </nav>
+    <div id="preloader" class="preloader">
+        <video autoplay muted loop class="preloader-video">
+          <source src="video/Black Animated Loading Ghost Video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
 
-        <section>
-            <div class="container py-5">
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-chat-dots"></i> ChatBox AI</a>
+        </div>
+    </nav>
 
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-4">
-
-                        <div class="card" id="chat1" style="border-radius: 15px;">
-                            <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
-                                style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                                <i class="fas fa-angle-left"></i>
-                                <p class="mb-0 fw-bold">Live chat</p>
-                                <i class="fas fa-times"></i>
-                            </div>
-                            <br><br>
-                            <div class="d-flex flex-row justify-content-start mb-4" style="margin-top: 10px;">
-                                <br>
-                                <img src="img/free-chat-support-icon-1708-thumb.png"
-                                  alt="avatar 1" style="width: 45px; height: 100%;">
-                                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                                  <p class="small mb-0">Hi !!! Welcome To Chat</p>
+    <section class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Live Chat
+                        </div>
+                        <div class="card-body" id="senders">
+                            <!-- Initial Message -->
+                            <div class="d-flex align-items-start mb-3">
+                                <img src="img/user.png" alt="avatar" class="avatar">
+                                <div class="chat-bubble sender1">
+                                    Hi! Welcome to ChatBox AI.
                                 </div>
-                              </div>
-
-                            <div class="card-body" id="senders">
-
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-            </div>
-        </section>
-
-
-
-
-        <div class="textfield" style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          margin: 0 auto;
-          width: 100%;
-          max-width: 400px; 
-          padding: 15px; 
-          background-color: #e0edf6; 
-          border-radius: 10px; 
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-      ">
-            <div class="input-group mb-3">
-                <button type="button" class="btn btn-outline-secondary">Select Sender</button>
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Select Sender</span>
-                </button>
-                <ul class="dropdown-menu" id="drop">
-                    <li><a class="dropdown-item" href="#" onclick="selectsender('sender 1')" id="sender1">Sender 1</a>
-                    </li>
-                    
-                </ul>
-                <input type="text" placeholder="Type Here..." class="form-control" aria-label="Text input with segmented dropdown button"
-                    id="gettext">
-                <button type="button" class="btn btn-outline-secondary" onclick="sendmessege()" >Send <i class="bi bi-send"></i></button>
             </div>
         </div>
+    </section>
 
+    <div class="container textfield mt-3">
+        <div class="d-flex align-items-center">
+            <div class="dropdown me-2">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Select Sender
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#" onclick="selectsender('sender 1')">Sender 1</a></li>
+                </ul>
+            </div>
+            <input type="text" id="gettext" class="form-control me-2" placeholder="Type your message...">
+            <button class="btn" onclick="sendmessege()">Send <i class="bi bi-send"></i></button>
+        </div>
     </div>
-
-
-
-
-
-
-    </div><!-- <div> main-------  -->
-
-
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

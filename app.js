@@ -1,6 +1,22 @@
 let findsender = "";
 const massegemainarray = [];
 
+
+// Show the preloader for a fixed duration
+window.addEventListener("DOMContentLoaded", function () {
+    const preloader = document.getElementById("preloader");
+    const content = document.getElementById("content");
+  
+    // Set loader duration (e.g., 3 seconds)
+    setTimeout(function () {
+      preloader.style.display = "none"; // Hide preloader
+      content.style.display = "block"; // Show main content
+    }, 5000); // Duration in milliseconds
+  });
+  
+  
+
+
 function selectsender(sender) {
     findsender = sender;
 }
@@ -91,7 +107,7 @@ function aigetrespond() {
         body: raw,
     };
 
-    fetch(, requestOptions)
+    fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBW4kugSJcx9NtESo6nUKyDF1NWjk8kAy0", requestOptions)
         .then((response) => response.json())
         .then((result) => {
             const aiResponse = result.candidates[0].content.parts[0].text;
