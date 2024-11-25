@@ -60,16 +60,6 @@ function loadchatbox() {
     massegemainarray.forEach(smassege => {
         if (smassege.sender === "sender1") {
             body += `
-            <div class="d-flex flex-row justify-content-start mb-4">
-                <img src="img/free-chat-support-icon-1708-thumb.png"
-                    alt="avatar 1" style="width: 45px; height: 100%;">
-                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                    <p class="small mb-0">${smassege.message}</p>
-                </div>
-            </div>
-            `;
-        } else if (smassege.sender === "sender2") {
-            body += `
             <div class="d-flex flex-row justify-content-end mb-4">
                 <div class="p-3 me-3 border bg-body-tertiary" style="border-radius: 15px;">
                     <p class="small mb-0">${smassege.message}</p>
@@ -78,6 +68,17 @@ function loadchatbox() {
                     alt="avatar 2" style="width: 45px; height: 100%;">
             </div>
             `;
+        } else if (smassege.sender === "sender2") {
+            body +=  `
+            <div class="d-flex flex-row justify-content-start mb-4">
+                <img src="img/user.png"
+                    alt="avatar 1" style="width: 45px; height: 100%;">
+                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                    <p class="small mb-0">${smassege.message}</p>
+                </div>
+            </div>
+            `
+            ;
         }
     });
 
